@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+        <link href="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.css" rel="stylesheet" />
+        <script src="https://api.mapbox.com/mapbox-gl-js/v3.15.0/mapbox-gl.js"></script>
+
+        <title>Map</title>
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            }
+
+            #map {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+            }
+
+            .button-container {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                z-index: 1000;
+            }
+
+            .map-button {
+                width: 40px;
+                height: 40px;
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                transition: background 0.2s;
+            }
+
+            .map-button:hover {
+                background-color: #f0f0f0;
+            }
+
+            .material-icons,
+            .material-symbols-outlined {
+                font-size: 22px;
+                color: #333;
+            }
+
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: 2000;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .modal-content {
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                width: 300px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                text-align: center;
+            }
+
+            .modal-content h3 {
+                margin-top: 0;
+                font-size: 1rem;
+            }
+
+            .template-option {
+                margin: 10px 0;
+                padding: 10px;
+                background: #f5f5f5;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            .template-option:hover {
+                background: #e0e0e0;
+            }
+
+            .close-btn {
+                margin: 10px 0;
+                padding: 10px;
+                background: #acd78f;
+                border-radius: 4px;
+                border: none;
+                cursor: pointer;
+                transition: background 0.2s;
+                width: 100%;
+                font-size: 1rem;
+            }
+
+            .close-btn:hover {
+                background: #a3ca86;
+            }
+
+            .peak-popup {
+                font-family: "Inter", sans-serif;
+                text-align: center;
+                min-width: 120px;
+            }
+
+            .popup-header {
+                font-weight: 600;
+                font-size: 1rem;
+                margin-bottom: 4px;
+            }
+
+            .popup-sub {
+                color: #555;
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+            }
+
+            .popup-btn-group {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .visit-btn {
+                width: 36px;
+                height: 36px;
+                border: none;
+                background: #f5f5f5;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background 0.2s, transform 0.1s;
+            }
+
+            .visit-btn:hover {
+                background: #e0e0e0;
+                transform: scale(1.05);
+            }
+
+            .visit-btn.active {
+                background: #4caf50;
+                color: white;
+            }
+
+            /* Info modal styling */
+            #info-modal .modal-content {
+                text-align: left;
+            }
+
+            .info-description {
+                font-size: 0.9rem;
+                color: #555;
+                margin-bottom: 1em;
+            }
+
+            .legend {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                font-size: 0.9rem;
+            }
+
+            .legend-color {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                border-radius: 4px;
+                margin-right: 6px;
+            }
+
+            /* Button tooltip */
+            .map-button {
+                position: relative;
+            }
+
+            .map-button::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                right: 110%;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(50, 50, 50, 0.9);
+                color: white;
+                font-size: 0.75rem;
+                padding: 4px 8px;
+                border-radius: 4px;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.2s, transform 0.2s;
+                transform-origin: right center;
+            }
+
+            .map-button:hover::after {
+                opacity: 1;
+                transform: translateY(-50%) translateX(-4px);
+            }
+
+            #save-map-name {
+                width: 100%;
+                margin: 10px 0;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 0.95rem;
+                font-family: "Inter", sans-serif;
+                box-sizing: border-box;
+                transition: border-color 0.2s, box-shadow 0.2s;
+            }
+
+            #save-map-name:focus {
+                outline: none;
+                border-color: #4caf50;
+                box-shadow: 0 0 3px rgba(76, 175, 80, 0.4);
+            }
+
+            /* Saved maps list styling */
+            #saved-maps-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            /* Action button container under each saved map */
+            .saved-map-actions {
+                margin-top: 6px;
+                display: flex;
+                gap: 8px;
+                justify-content: center;
+            }
+
+            /* Load and delete buttons inherit .close-btn but adjust colors */
+            .load-btn {
+                flex: 1;
+                background: #acd78f;
+            }
+
+            .load-btn:hover {
+                background: #a3ca86;
+            }
+
+            .delete-btn {
+                flex: 1;
+                background: #d66b6b;
+            }
+
+            .delete-btn:hover {
+                background: #c55a5a;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- render map -->
+        <div id="map"></div>
+
+        <!-- render controls -->
+        <div class="button-container" id="map-button-container"></div>
+
+        <!-- file upload -->
+        <input type="file" id="geojson-upload" accept=".geojson,application/geo+json" style="display: none" />
+
+        <!-- area template modal -->
+        <div class="modal" id="new-area-modal">
+            <div class="modal-content">
+                <h3>New Topographical Prominence Map</h3>
+                <div id="template-options-container"></div>
+                <button class="close-btn" id="close-modal-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- info modal -->
+        <div class="modal" id="info-modal">
+            <div class="modal-content">
+                <h3>Map App</h3>
+                <p class="info-description">
+                    This interactive map visualizes mountain summits and your seasonal visits. Each marker represents a peak, and
+                    its color reflects your visit status. Click on a marker to update whether you've climbed it in <b>summer</b>,
+                    <b>winter</b>, or <b>both</b>.
+                </p>
+                <h4 style="margin-bottom: 6px">Legend</h4>
+                <div class="legend" id="legend-container"></div>
+                <button class="close-btn" id="close-info-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- maps modal -->
+        <div class="modal" id="map-manager-modal">
+            <div class="modal-content">
+                <h3>Saved Maps</h3>
+                <div id="saved-maps-list"></div>
+                <input id="save-map-name" placeholder="New map name..." />
+                <button class="close-btn" id="save-map-btn">Save current map</button>
+                <button class="close-btn" id="close-map-manager-btn">Close</button>
+            </div>
+        </div>
+
+        <script>
+            const $ = (id) => document.getElementById(id);
+
+            mapboxgl.accessToken =
+                "pk.eyJ1IjoibHVuZGNocmlzdGlhbiIsImEiOiJjbWFhcjg2cnQxenI4MmlzNnVtZWhjNm1kIn0.jgBHDi-d1S4EtilBVYbhFw";
+
+            const map_styles = [
+                "mapbox://styles/mapbox/outdoors-v12",
+                "mapbox://styles/mapbox/streets-v12",
+                "mapbox://styles/mapbox/satellite-streets-v12",
+            ];
+
+            const DEFAULT_LOCATION = [18.9391246, 69.6723691];
+
+            const app_state = {
+                style_idx: 0,
+                current_markers: null,
+            };
+
+            const base_areas = [
+                { id: "kval_base", name: "Kvaløya" },
+                { id: "fast_base", name: "Fastlandet" },
+                { id: "kval_cl", name: "Mine" },
+            ];
+
+            const map = new mapboxgl.Map({
+                container: "map",
+                style: map_styles[app_state.style_idx],
+                center: DEFAULT_LOCATION,
+                zoom: 9,
+            });
+
+            map.on("style.load", () => {
+                map.addSource("mapbox-dem", {
+                    type: "raster-dem",
+                    url: "mapbox://mapbox.mapbox-terrain-dem-v1",
+                    tileSize: 512,
+                    maxzoom: 14,
+                });
+                map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
+            });
+
+            function no_markers() {
+                return !app_state.current_markers || app_state.current_markers.length === 0;
+            }
+
+            function get_maps_from_store() {
+                return JSON.parse(localStorage.getItem("saved_maps") || "[]");
+            }
+
+            function save_maps_to_store(maps) {
+                localStorage.setItem("saved_maps", JSON.stringify(maps));
+            }
+
+            function load_maps_from_store() {
+                const list = $("saved-maps-list");
+                list.innerHTML = "";
+
+                const maps = get_maps_from_store();
+                if (maps.length === 0) {
+                    list.innerHTML = "<p style='color:#666'><i>Saved maps appear here</i></p>";
+                    return;
+                }
+
+                for (const map_object of maps) {
+                    const item = document.createElement("div");
+                    item.className = "template-option";
+                    item.innerHTML = `
+                        <strong>${map_object.map_name}</strong><br/>
+                        <small>${new Date(map_object.saved_at).toLocaleString()}</small>
+                        <div class="saved-map-actions">
+                            <button class="close-btn load-btn">Load</button>
+                            <button class="close-btn delete-btn">Delete</button>
+                        </div>
+                    `;
+
+                    item.querySelector(".load-btn").addEventListener("click", () => {
+                        load_geojson(map_object.geojson);
+                        $("map-manager-modal").style.display = "none";
+                    });
+
+                    item.querySelector(".delete-btn").addEventListener("click", () => {
+                        if (confirm(`Delete saved map "${map_object.map_name}"?`)) {
+                            const updated = maps.filter((m) => m.map_name !== map_object.map_name);
+                            save_maps_to_store(updated);
+                            load_maps_from_store();
+                        }
+                    });
+
+                    list.appendChild(item);
+                }
+            }
+
+            function get_visit_color(visited) {
+                switch (visited.toLowerCase()) {
+                    case "summer":
+                        return "#A94A4A";
+                    case "winter":
+                        return "#143D60";
+                    case "both":
+                        return "#1A1A19";
+                    default: // none
+                        return "#626F47";
+                }
+            }
+
+            function build_legend() {
+                const legend = $("legend-container");
+                legend.innerHTML = "";
+
+                const entries = [
+                    { label: "Not visited", key: "none" },
+                    { label: "Summer visit", key: "summer" },
+                    { label: "Winter visit", key: "winter" },
+                    { label: "Both seasons", key: "both" },
+                ];
+
+                for (const { label, key } of entries) {
+                    const item = document.createElement("div");
+                    item.className = "legend-item";
+                    item.innerHTML = `<span class="legend-color" style="background:${get_visit_color(key)}"></span>${label}`;
+                    legend.appendChild(item);
+                }
+            }
+
+            function create_marker(feature) {
+                const [lng, lat] = feature.geometry.coordinates;
+                const { name, masl } = feature.properties;
+                let visited = feature.properties.visited?.toLowerCase() || "none";
+
+                const popup = document.createElement("div");
+                popup.className = "peak-popup";
+                popup.innerHTML = `
+                    <div class="popup-header">${name}</div>
+                    <div class="popup-sub">${masl} masl</div>
+                    <div class="popup-btn-group">
+                        <button class="visit-btn" data-type="none"><span class="material-icons">remove_circle_outline</span></button>
+                        <button class="visit-btn" data-type="summer"><span class="material-icons">wb_sunny</span></button>
+                        <button class="visit-btn" data-type="winter"><span class="material-icons">ac_unit</span></button>
+                        <button class="visit-btn" data-type="both"><span class="material-symbols-outlined">mountain_flag</span></button>
+                    </div>
+                `;
+
+                let marker = new mapboxgl.Marker({ color: get_visit_color(visited) })
+                    .setLngLat([lng, lat])
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }).setDOMContent(popup))
+                    .addTo(map);
+                marker.feature = feature;
+
+                const update_active_button = () => {
+                    popup.querySelectorAll(".visit-btn").forEach((btn) => {
+                        btn.classList.toggle("active", btn.dataset.type === visited);
+                    });
+                };
+                update_active_button();
+
+                popup.querySelectorAll(".visit-btn").forEach((btn) => {
+                    btn.addEventListener("click", (e) => {
+                        visited = e.currentTarget.dataset.type;
+                        feature.properties.visited = visited;
+                        update_active_button();
+
+                        const lngLat = marker.getLngLat();
+                        const popup = marker.getPopup();
+                        marker.remove();
+
+                        const updated_marker = new mapboxgl.Marker({ color: get_visit_color(visited) })
+                            .setLngLat(lngLat)
+                            .setPopup(popup)
+                            .addTo(map);
+                        updated_marker.feature = feature;
+
+                        const idx = app_state.current_markers.indexOf(marker);
+                        if (idx !== -1) app_state.current_markers[idx] = updated_marker;
+                        marker = updated_marker;
+                    });
+                });
+
+                app_state.current_markers.push(marker);
+            }
+
+            function center_map_on_markers(geojson) {
+                const coords = geojson.features.filter((f) => f.geometry.type === "Point").map((f) => f.geometry.coordinates);
+                if (coords.length > 0) {
+                    const lons = coords.map((c) => c[0]);
+                    const lats = coords.map((c) => c[1]);
+                    const bounds = [
+                        [Math.min(...lons), Math.min(...lats)],
+                        [Math.max(...lons), Math.max(...lats)],
+                    ];
+                    map.fitBounds(bounds, { padding: 50 });
+                }
+            }
+
+            function remove_all_markers() {
+                if (app_state.current_markers) {
+                    for (const marker of app_state.current_markers) marker.remove();
+                }
+                app_state.current_markers = [];
+            }
+
+            const buttons = [
+                {
+                    icon: "info",
+                    tooltip: "About the Map App",
+                    action: () => {
+                        $("info-modal").style.display = "flex";
+                    },
+                },
+                {
+                    icon: "add_circle",
+                    tooltip: "Choose a template",
+                    action: () => {
+                        $("new-area-modal").style.display = "flex";
+                    },
+                },
+                {
+                    icon: "folder",
+                    tooltip: "Manage saved maps",
+                    action: () => {
+                        $("map-manager-modal").style.display = "flex";
+                        load_maps_from_store();
+                    },
+                },
+                { icon: "add", tooltip: "Zoom in", action: () => map.zoomIn() },
+                { icon: "remove", tooltip: "Zoom out", action: () => map.zoomOut() },
+                {
+                    icon: "my_location",
+                    tooltip: "Go to default view",
+                    action: () => map.flyTo({ center: DEFAULT_LOCATION, zoom: 9 }),
+                },
+                {
+                    icon: "map",
+                    tooltip: "Toggle map style",
+                    action: () => {
+                        app_state.style_idx = (app_state.style_idx + 1) % map_styles.length;
+                        map.setStyle(map_styles[app_state.style_idx]);
+                    },
+                },
+                {
+                    icon: "delete",
+                    tooltip: "Remove all markers",
+                    action: () => {
+                        if (no_markers()) {
+                            alert("No map loaded.");
+                            return;
+                        }
+                        remove_all_markers();
+                    },
+                },
+                {
+                    icon: "upload",
+                    tooltip: "Upload geojson",
+                    action: () => $("geojson-upload").click(),
+                },
+                {
+                    icon: "download",
+                    tooltip: "Download geojson",
+                    action: () => {
+                        if (no_markers()) {
+                            alert("No map data to download.");
+                            return;
+                        }
+
+                        const url = URL.createObjectURL(
+                            new Blob(
+                                [
+                                    JSON.stringify(
+                                        {
+                                            type: "FeatureCollection",
+                                            features: app_state.current_markers.map((marker) => marker.feature),
+                                        },
+                                        null,
+                                        4
+                                    ),
+                                ],
+                                { type: "application/geo+json" }
+                            )
+                        );
+
+                        const anchor = document.createElement("a");
+                        anchor.href = url;
+                        anchor.download = "map_data.geojson";
+                        document.body.appendChild(anchor);
+                        anchor.click();
+                        document.body.removeChild(anchor);
+                        URL.revokeObjectURL(url);
+                    },
+                },
+            ];
+
+            for (const { icon, tooltip, action } of buttons) {
+                const btn = document.createElement("div");
+                btn.className = "map-button";
+                btn.innerHTML = `<span class="material-icons">${icon}</span>`;
+                btn.dataset.tooltip = tooltip;
+                btn.addEventListener("click", action);
+                $("map-button-container").appendChild(btn);
+            }
+
+            for (const area of base_areas) {
+                const option = document.createElement("div");
+                option.className = "template-option";
+                option.dataset.template = area.id;
+                option.textContent = area.name;
+
+                option.addEventListener("click", async () => {
+                    $("new-area-modal").style.display = "none";
+
+                    try {
+                        const response = await fetch(`${area.id}.geojson`);
+                        if (!response.ok) throw new Error(`Failed to load ${area.id}.geojson`);
+                        const geojson = await response.json();
+
+                        remove_all_markers();
+                        for (const feature of geojson.features) {
+                            if (feature.geometry.type === "Point") {
+                                create_marker(feature);
+                            }
+                        }
+                        center_map_on_markers(geojson);
+                    } catch (err) {
+                        console.error(err);
+                        alert(`Could not load ${area.name}`);
+                    }
+                });
+
+                $("template-options-container").appendChild(option);
+            }
+
+            function load_geojson(geojson) {
+                if (!geojson?.features) {
+                    alert("Invalid GeoJSON data.");
+                    return;
+                }
+
+                remove_all_markers();
+                for (const feature of geojson.features) {
+                    if (feature.geometry.type === "Point") {
+                        create_marker(feature);
+                    }
+                }
+                center_map_on_markers(geojson);
+            }
+
+            $("save-map-btn").addEventListener("click", () => {
+                if (no_markers()) {
+                    alert("No map data to save.");
+                    return;
+                }
+
+                const name = $("save-map-name").value.trim();
+                if (!name) {
+                    alert("Please enter a map name.");
+                    return;
+                }
+
+                const geojson = {
+                    type: "FeatureCollection",
+                    features: app_state.current_markers.map((m) => m.feature),
+                };
+
+                const maps = get_maps_from_store();
+                const idx = maps.findIndex((m) => m.map_name === name);
+
+                if (idx !== -1) {
+                    if (!confirm("Map name exists. Overwrite?")) return;
+                    maps[idx] = { map_name: name, geojson, saved_at: new Date().toISOString() };
+                } else {
+                    maps.push({ map_name: name, geojson, saved_at: new Date().toISOString() });
+                }
+
+                save_maps_to_store(maps);
+                load_maps_from_store();
+                alert("Map saved locally!");
+            });
+
+            $("geojson-upload").addEventListener("change", async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                try {
+                    const text = await file.text();
+                    const geojson = JSON.parse(text);
+
+                    if (!geojson.features) {
+                        throw new Error("Invalid GeoJSON");
+                    }
+
+                    remove_all_markers();
+                    for (const feature of geojson.features) {
+                        if (feature.geometry.type === "Point") {
+                            create_marker(feature);
+                        }
+                    }
+                    center_map_on_markers(geojson);
+                } catch (err) {
+                    console.error(err);
+                    alert("Invalid GeoJSON file.");
+                } finally {
+                    e.target.value = "";
+                }
+            });
+
+            $("close-modal-btn").addEventListener("click", () => {
+                $("new-area-modal").style.display = "none";
+            });
+
+            $("close-info-btn").addEventListener("click", () => {
+                $("info-modal").style.display = "none";
+            });
+
+            $("close-map-manager-btn").addEventListener("click", () => {
+                $("map-manager-modal").style.display = "none";
+            });
+
+            build_legend();
+        </script>
+    </body>
+</html>

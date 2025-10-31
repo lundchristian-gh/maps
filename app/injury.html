@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Injury App</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- implement the html skeleton -->
+        <div style="display: flex; height: 100vh">
+            <div style="width: 25%; border-right: 1px solid #ccc; padding: 10px; box-sizing: border-box">
+                <h2>Injuries</h2>
+                <ul id="injury-list" style="list-style-type: none; padding: 0">
+                    <!-- Injury items will be populated here -->
+                </ul>
+                <button id="add-injury-btn">Add Injury</button>
+            </div>
+            <div style="width: 75%; padding: 10px; box-sizing: border-box">
+                <h2>Injury Details</h2>
+                <div id="injury-details">
+                    <!-- Injury details will be shown here -->
+                </div>
+            </div>
+        </div>
+        <script>
+            /*
+            Injury App
+
+            UI:
+            - Two vertical views (left 25% and right 75%).
+            - Left view: List of injuries with add/edit/delete options.
+            - Right view: Detailed view of selected injury with editable fields.
+
+            Injury Data Structure:
+            - id: unique identifier
+            - name: string
+            - dateOfInjury: date
+            - array of updates:
+                - date: date
+                - painLevel: integer (1-10)
+            */
+            function initializeApp() {
+                const injuryList = document.getElementById("injury-list");
+                const injuryDetails = document.getElementById("injury-details");
+                const addInjuryBtn = document.getElementById("add-injury-btn");
+
+                let injuries = [];
+                let selectedInjuryId = null;
+
+                function renderInjuryList() {
+                    injuryList.innerHTML = "";
+                    injuries.forEach((injury) => {
+                        const li = document.createElement("li");
+                        li.textContent = injury.name;
+                        li.style.cursor = "pointer";
+                        li.onclick = () => {
+                            selectedInjuryId = injury.id;
+                            renderInjuryDetails();
+                        };
+                        injuryList.appendChild(li);
+                    });
+                }
+
+                function renderInjuryDetails() {
+                    const injury = injuries.find((i) => i.id === selectedInjuryId);
+                    if (!injury) {
+                        injuryDetails.innerHTML = "<p>Select an injury to see details.</p>";
+                        return;
+                    }
+                    let html = `<h3>${injury.name}</h3>`;
+                    html += `<p>Date of Injury: ${injury.dateOfInjury}</p>`;
+                    html += "<h4>Updates:</h4><ul>";
+                    injury.updates.forEach((update) => {
+                        html += `<li>Date: ${update.date}, Pain Level: ${update.painLevel}</li>`;
+                    });
+                    html += "</ul>";
+                    injuryDetails.innerHTML = html;
+                }
+
+                addInjuryBtn.onclick = () => {
+                    const name = prompt("Enter injury name:");
+                    const dateOfInjury = prompt("Enter date of injury (YYYY-MM-DD):");
+                    if (name && dateOfInjury) {
+                        const newInjury = {
+                            id: Date.now().toString(),
+                            name,
+                            dateOfInjury,
+                            updates: [],
+                        };
+                        injuries.push(newInjury);
+                        renderInjuryList();
+                    }
+                };
+
+                renderInjuryList();
+                renderInjuryDetails();
+            }
+            initializeApp();
+        </script>
+    </body>
+</html>

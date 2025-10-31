@@ -1,0 +1,905 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tromsdalstinden",
+                "masl": 1238,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1457156, 69.6071787]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sollidalsaksla",
+                "masl": 788,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [18.9879332, 69.5864542]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Fagerfjellet",
+                "masl": 957,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2773307, 69.5453344]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Skarsfjellet",
+                "masl": 843,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1469722, 69.6319363]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Langlitinden",
+                "masl": 961,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2267374, 69.6148575]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Skarlifjellet",
+                "masl": 857,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3361082, 69.6332091]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Storfjellet",
+                "masl": 1089,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3931346, 69.6491278]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Breidalfjellet",
+                "masl": 889,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4276529, 69.6548108]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Finnheimfjellet",
+                "masl": 1148,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4909021, 69.6781241]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Finnheimfjellet (Nord)",
+                "masl": 1060,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.499966, 69.6864745]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Rundfjellet",
+                "masl": 1113,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4216577, 69.697544]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Vardtinden",
+                "masl": 1054,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5868904, 69.6803789]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Stortuva",
+                "masl": 1109,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.620643, 69.7035446]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Kronstadtinden",
+                "masl": 893,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6338208, 69.740879]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Svarvarfjellet",
+                "masl": 539,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5043204, 69.7667298]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Svarthamartinden",
+                "masl": 891,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6427316, 69.7711872]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Ullstinden SV",
+                "masl": 1078,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6502337, 69.7862648]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Ullstinden",
+                "masl": 1093,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6688997, 69.7958736]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Snyfjellet",
+                "masl": 486,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3071934, 69.7314889]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Åsfjellet",
+                "masl": 340,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2309868, 69.7586227]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Rundfjellet",
+                "masl": 778,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1626189, 69.6703154]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Storåsen",
+                "masl": 274,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.0241888, 69.5379456]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gryta Ø",
+                "masl": 945,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1447447, 69.5001969]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gårdselvtinden",
+                "masl": 1072,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1170851, 69.4973835]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tverrbotnfjellet",
+                "masl": 1299,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1903757, 69.4786516]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Stortinden N",
+                "masl": 1248,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1579907, 69.4615567]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Stortinden",
+                "masl": 1320,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1771387, 69.4524135]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Andersdalstinden",
+                "masl": 1221,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2251806, 69.4174457]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sultinden",
+                "masl": 1196,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1995314, 69.4137845]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Svartnestinden",
+                "masl": 1214,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1706855, 69.4030783]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Durmålsskolten",
+                "masl": 1061,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.1275873, 69.424859]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Lavangstinden",
+                "masl": 764,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2415763, 69.3918206]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Karltinden",
+                "masl": 1206,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6562629, 69.6022946]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Lavangstinden",
+                "masl": 1215,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.6109608, 69.5647809]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Stormheimfjellet",
+                "masl": 1223,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4889183, 69.5891472]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tepphaugdaltinden",
+                "masl": 1251,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4367118, 69.5720075]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tepphaugdaltinden SV",
+                "masl": 1065,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4119234, 69.5576086]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bjørnskartinden",
+                "masl": 1358,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3638629, 69.556339]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Hamperokken",
+                "masl": 1404,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3587396, 69.5620998]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Stortinden",
+                "masl": 1259,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3396563, 69.5539867]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Maritinden",
+                "masl": 1062,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.291955, 69.5294322]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Maritinden Ø",
+                "masl": 1045,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3129357, 69.5241745]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bjørnskaret S",
+                "masl": 1160,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3770994, 69.5355532]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Bjørnskardalen SØ",
+                "masl": 1000,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3725927, 69.5295901]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Saltdalen NØ",
+                "masl": 1244,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3697509, 69.5194586]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Saltdalstinden",
+                "masl": 1324,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3833274, 69.5114179]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Namdalfjellet",
+                "masl": 1039,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4527767, 69.5414741]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Saltdalen V",
+                "masl": 1145,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.339918, 69.4947286]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Mellomdalen NØ",
+                "masl": 1202,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3370555, 69.4796802]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Henrikstinden",
+                "masl": 1270,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2954801, 69.4910287]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Henrikstinden N",
+                "masl": 1134,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2910623, 69.4981921]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Smalaktinden",
+                "masl": 1248,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.2943929, 69.4539352]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Smalaktinden Ø",
+                "masl": 1236,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3613728, 69.4553373]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmerdalsbreen N",
+                "masl": 1224,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3770781, 69.4402353]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmerdalsbreen NV",
+                "masl": 1166,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3535829, 69.4267622]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmerdalsbreen V",
+                "masl": 1174,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3545844, 69.4210381]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tverrfjellet",
+                "masl": 1133,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3517798, 69.4126728]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmerdalsbreen S",
+                "masl": 976,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3880922, 69.4193086]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmertinden",
+                "masl": 1102,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3934712, 69.408664]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Blåtinden",
+                "masl": 1180,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.3227542, 69.4033811]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sieidi SV",
+                "masl": 1060,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4773559, 69.4135563]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sieidi NØ",
+                "masl": 1046,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4949139, 69.4204813]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sieidivatnet V",
+                "masl": 900,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4550652, 69.4219522]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Gjømmerdalsbreen Ø",
+                "masl": 919,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4258084, 69.4278068]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Vazzoalgi",
+                "masl": 1091,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4903816, 69.4416299]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Lille Rieppefjell",
+                "masl": 1136,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4629216, 69.4472657]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Lille Rieppefjell V",
+                "masl": 1006,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4312074, 69.4520268]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Njoskefjellet",
+                "masl": 756,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5921776, 69.4629641]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sennadalstinden",
+                "masl": 1289,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4213262, 69.4810665]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Blåisen SV",
+                "masl": 1215,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4228048, 69.4866913]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Store Rieppefjell",
+                "masl": 1295,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5025296, 69.4901741]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Lille Rieppetinden",
+                "masl": 1109,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5352528, 69.4969078]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sennedaltinden",
+                "masl": 1392,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.4942023, 69.5145481]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Tverrfjellet",
+                "masl": 1394,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5262735, 69.523916]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Sjursnestinden",
+                "masl": 1122,
+                "visited": "none"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [19.5834332, 69.5297682]
+            }
+        }
+    ]
+}
