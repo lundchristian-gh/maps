@@ -274,6 +274,63 @@
             .delete-btn:hover {
                 background: #c55a5a;
             }
+
+            .stats-panel {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                background: rgba(255, 255, 255, 0); /* slightly more transparent */
+                backdrop-filter: blur(3px); /* frosted glass effect */
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 10px;
+                padding: 12px 16px;
+                font-size: 0.9rem;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+                font-family: "Inter", sans-serif;
+                z-index: 1500;
+                line-height: 1.4;
+                width: 180px;
+                transition: background 0.3s ease;
+            }
+
+            .stats-title {
+                font-weight: 600;
+                margin-bottom: 8px;
+                text-align: center;
+            }
+
+            .stats-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+
+            .stats-label {
+                width: 50px;
+                text-align: right;
+            }
+
+            .stats-bar {
+                flex: 1;
+                height: 6px;
+                border-radius: 4px;
+                background: rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                position: relative;
+            }
+
+            .stats-fill {
+                height: 100%;
+                border-radius: 4px;
+                transition: width 0.4s ease;
+            }
+
+            .stats-pct {
+                width: 40px;
+                text-align: right;
+            }
         </style>
     </head>
 
@@ -283,6 +340,9 @@
 
         <!-- render controls -->
         <div class="button-container" id="map-button-container"></div>
+
+        <!-- visit stats panel -->
+        <div id="visit-stats" class="stats-panel" style="display: none"></div>
 
         <!-- file upload -->
         <input type="file" id="geojson-upload" accept=".geojson,application/geo+json" style="display: none" />
@@ -523,6 +583,58 @@
                 app_state.current_markers = [];
             }
 
+            function update_visit_stats() {
+                const element = document.getElementById("visit-stats");
+                const markers = app_state.current_markers || [];
+
+                if (markers.length === 0) {
+                    element.style.display = "none";
+                    return;
+                }
+
+                element.style.display = "block";
+
+                const counts = { none: 0, summer: 0, winter: 0, both: 0 };
+                for (const marker of markers) {
+                    const v = (marker.feature.properties.visited || "none").toLowerCase();
+                    if (counts[v] !== undefined) counts[v]++;
+                }
+
+                const total = markers.length;
+                const visitedCount = counts.summer + counts.winter + counts.both;
+                const pct = (n) => ((n / total) * 100).toFixed(1);
+
+                const makeRow = (label, key, color) => {
+                    const percentage = pct(counts[key]);
+                    return `
+                        <div class="stats-row">
+                            <span class="stats-label">${label}</span>
+                            <div class="stats-bar">
+                                <div class="stats-fill" style="width:${percentage}%; background:${color}"></div>
+                            </div>
+                            <span class="stats-pct">${percentage}%</span>
+                        </div>
+                    `;
+                };
+
+                const visitedPct = pct(visitedCount);
+
+                element.innerHTML = `
+                    <div class="stats-title">Visit Stats</div>
+                    <div class="stats-row">
+                        <span class="stats-label" style="font-weight:600">Visited</span>
+                        <div class="stats-bar">
+                            <div class="stats-fill" style="width:${visitedPct}%; background:#4caf50"></div>
+                        </div>
+                        <span class="stats-pct" style="font-weight:600">${visitedPct}%</span>
+                    </div>
+                    ${makeRow("Summer", "summer", get_visit_color("summer"))}
+                    ${makeRow("Winter", "winter", get_visit_color("winter"))}
+                    ${makeRow("Both", "both", get_visit_color("both"))}
+                    ${makeRow("None", "none", get_visit_color("none"))}
+                `;
+            }
+
             const buttons = [
                 {
                     icon: "info",
@@ -570,6 +682,7 @@
                             return;
                         }
                         remove_all_markers();
+                        update_visit_stats();
                     },
                 },
                 {
@@ -643,6 +756,7 @@
                             }
                         }
                         center_map_on_markers(geojson);
+                        update_visit_stats();
                     } catch (err) {
                         console.error(err);
                         alert(`Could not load ${area.name}`);
@@ -665,6 +779,7 @@
                     }
                 }
                 center_map_on_markers(geojson);
+                update_visit_stats();
             }
 
             $("save-map-btn").addEventListener("click", () => {
@@ -718,6 +833,7 @@
                         }
                     }
                     center_map_on_markers(geojson);
+                    update_visit_stats();
                 } catch (err) {
                     console.error(err);
                     alert("Invalid GeoJSON file.");
