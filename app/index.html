@@ -361,9 +361,8 @@
             <div class="modal-content">
                 <h3>Map App</h3>
                 <p class="info-description">
-                    This interactive map visualizes mountain summits and your seasonal visits. Each marker represents a peak, and
-                    its color reflects your visit status. Click on a marker to update whether you've climbed it in <b>summer</b>,
-                    <b>winter</b>, or <b>both</b>.
+                    Interactive map for visualizing, and keeping track of, mountain summit visits. Only a limited set of pre-made
+                    areas are available, but you may upload your own GeoJSON files with summit data.<br />
                 </p>
                 <h4 style="margin-bottom: 6px">Legend</h4>
                 <div class="legend" id="legend-container"></div>
@@ -404,8 +403,8 @@
             const base_areas = [
                 { id: "data/kval_base", name: "Kvaløya" },
                 { id: "data/fast_base", name: "Fastlandet" },
-                { id: "data/kval_cl", name: "Mine K" },
-                { id: "data/fast_cl", name: "Mine F" },
+                { id: "data/kval_cl", name: "Kvaløya CL" },
+                { id: "data/fast_cl", name: "Fastlandet CL" },
             ];
 
             const map = new mapboxgl.Map({
@@ -494,10 +493,10 @@
                 legend.innerHTML = "";
 
                 const entries = [
-                    { label: "Not visited", key: "none" },
-                    { label: "Summer visit", key: "summer" },
-                    { label: "Winter visit", key: "winter" },
-                    { label: "Both seasons", key: "both" },
+                    { label: "Not yet visited", key: "none" },
+                    { label: "Visited only in summer", key: "summer" },
+                    { label: "Visited only in winter", key: "winter" },
+                    { label: "Visited in both seasons", key: "both" },
                 ];
 
                 for (const { label, key } of entries) {

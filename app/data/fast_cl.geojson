@@ -342,7 +342,7 @@
             "properties": {
                 "name": "Sultinden",
                 "masl": 1196,
-                "visited": "none"
+                "visited": "winter"
             },
             "geometry": {
                 "type": "Point",
