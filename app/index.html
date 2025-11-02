@@ -647,6 +647,7 @@
                         const idx = app_state.current_markers.indexOf(marker);
                         if (idx !== -1) app_state.current_markers[idx] = updated_marker;
                         marker = updated_marker;
+                        update_visit_stats();
                     });
                 });
 
@@ -694,7 +695,7 @@
                 const visitedCount = counts.summer + counts.winter + counts.both;
                 const pct = (n) => ((n / total) * 100).toFixed(1);
 
-                const makeRow = (label, key, color) => {
+                const make_row = (label, key, color) => {
                     const percentage = pct(counts[key]);
                     return `
                         <div class="stats-row">
@@ -707,21 +708,21 @@
                     `;
                 };
 
-                const visitedPct = pct(visitedCount);
+                const visited_pct = pct(visitedCount);
 
                 element.innerHTML = `
                     <div class="stats-title">Visit Stats</div>
                     <div class="stats-row">
                         <span class="stats-label" style="font-weight:600">Visited</span>
                         <div class="stats-bar">
-                            <div class="stats-fill" style="width:${visitedPct}%; background:#4caf50"></div>
+                            <div class="stats-fill" style="width:${visited_pct}%; background:#4caf50"></div>
                         </div>
-                        <span class="stats-pct" style="font-weight:600">${visitedPct}%</span>
+                        <span class="stats-pct" style="font-weight:600">${visited_pct}%</span>
                     </div>
-                    ${makeRow("Summer", "summer", get_visit_color("summer"))}
-                    ${makeRow("Winter", "winter", get_visit_color("winter"))}
-                    ${makeRow("Both", "both", get_visit_color("both"))}
-                    ${makeRow("None", "none", get_visit_color("none"))}
+                    ${make_row("Summer", "summer", get_visit_color("summer"))}
+                    ${make_row("Winter", "winter", get_visit_color("winter"))}
+                    ${make_row("Both", "both", get_visit_color("both"))}
+                    ${make_row("None", "none", get_visit_color("none"))}
                 `;
             }
 
