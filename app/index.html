@@ -331,6 +331,10 @@
                 width: 40px;
                 text-align: right;
             }
+
+            .map-button.active {
+                background-color: #a3ca86 !important;
+            }
         </style>
     </head>
 
@@ -384,6 +388,8 @@
         <script>
             const $ = (id) => document.getElementById(id);
 
+            const roundTo = (n, dec) => parseFloat(n.toFixed(dec));
+
             mapboxgl.accessToken =
                 "pk.eyJ1IjoibHVuZGNocmlzdGlhbiIsImEiOiJjbWFhcjg2cnQxenI4MmlzNnVtZWhjNm1kIn0.jgBHDi-d1S4EtilBVYbhFw";
 
@@ -398,6 +404,7 @@
             const app_state = {
                 style_idx: 0,
                 current_markers: null,
+                create_mode: false,
             };
 
             const base_areas = [
@@ -423,6 +430,89 @@
                 });
                 map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
             });
+
+            map.on("click", async (e) => {
+                if (!app_state.create_mode) return;
+
+                const name = prompt("Enter summit name:");
+                if (!name) return;
+
+                const { lng, lat } = e.lngLat;
+                let masl = 0;
+                try {
+                    masl = await get_elevation(lng, lat);
+                } catch (error) {
+                    console.error("Error fetching elevation:", error);
+                }
+
+                if (no_markers()) app_state.current_markers = [];
+                create_marker({
+                    type: "Feature",
+                    geometry: {
+                        type: "Point",
+                        coordinates: [roundTo(lng, 7), roundTo(lat, 7)],
+                    },
+                    properties: {
+                        name: name,
+                        masl: roundTo(masl, 1),
+                        visited: "none",
+                    },
+                });
+                update_visit_stats();
+            });
+
+            async function get_elevation(lon, lat, zoom = 14) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        const tile_coords = get_tile_coords(lon, lat, zoom);
+                        const pixel_coords = get_pixel_coords(lon, lat, zoom, tile_coords);
+
+                        const url = `https://api.mapbox.com/v4/mapbox.terrain-rgb/${zoom}/${tile_coords.x}/${tile_coords.y}@2x.pngraw?access_token=${mapboxgl.accessToken}`;
+
+                        const img = new Image();
+                        img.crossOrigin = "anonymous";
+
+                        img.onload = function () {
+                            const canvas = document.createElement("canvas");
+                            const ctx = canvas.getContext("2d");
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            ctx.drawImage(img, 0, 0);
+
+                            const imageData = ctx.getImageData(pixel_coords.x, pixel_coords.y, 1, 1);
+                            const [r, g, b] = imageData.data;
+
+                            const elevation = -10000 + (r * 256 * 256 + g * 256 + b) * 0.1;
+                            resolve(elevation);
+                        };
+
+                        img.onerror = () => reject(new Error("Failed to load terrain tile"));
+                        img.src = url;
+                    } catch (error) {
+                        reject(error);
+                    }
+                });
+            }
+
+            function get_tile_coords(lon, lat, zoom) {
+                const x = Math.floor(((lon + 180) / 360) * Math.pow(2, zoom));
+                const lat_rad = (lat * Math.PI) / 180;
+                const y = Math.floor(
+                    ((1 - Math.log(Math.tan(lat_rad) + 1 / Math.cos(lat_rad)) / Math.PI) / 2) * Math.pow(2, zoom)
+                );
+                return { x, y };
+            }
+
+            function get_pixel_coords(lon, lat, zoom, tileCoords) {
+                const scale = Math.pow(2, zoom);
+                const world_coord_x = ((lon + 180) / 360) * scale;
+                const world_coord_y =
+                    ((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) * scale;
+                const tile_size = 512;
+                const pixel_x = Math.floor((world_coord_x - tileCoords.x) * tile_size);
+                const pixel_y = Math.floor((world_coord_y - tileCoords.y) * tile_size);
+                return { x: pixel_x, y: pixel_y };
+            }
 
             function no_markers() {
                 return !app_state.current_markers || app_state.current_markers.length === 0;
@@ -726,12 +816,27 @@
                 },
             ];
 
+            const create_button = {
+                icon: "edit_location_alt",
+                tooltip: "Toggle create mode (add peaks)",
+                action: (btn) => {
+                    app_state.create_mode = !app_state.create_mode;
+                    btn.classList.toggle("active", app_state.create_mode);
+                    btn.style.backgroundColor = app_state.create_mode ? "#a3ca86" : "white";
+                    map.getCanvas().style.cursor = app_state.create_mode ? "crosshair" : "";
+                },
+            };
+            buttons.unshift(create_button);
+
             for (const { icon, tooltip, action } of buttons) {
                 const btn = document.createElement("div");
                 btn.className = "map-button";
                 btn.innerHTML = `<span class="material-icons">${icon}</span>`;
                 btn.dataset.tooltip = tooltip;
-                btn.addEventListener("click", action);
+
+                // ✅ Pass the DOM button to its action handler
+                btn.addEventListener("click", () => action(btn));
+
                 $("map-button-container").appendChild(btn);
             }
 

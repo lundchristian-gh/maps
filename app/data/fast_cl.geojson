@@ -174,7 +174,7 @@
             "properties": {
                 "name": "Svarvarfjellet",
                 "masl": 539,
-                "visited": "none"
+                "visited": "winter"
             },
             "geometry": {
                 "type": "Point",
